@@ -290,13 +290,13 @@ a.btn-cta {
 .hero-carousel .carousel-inner .item {
   height: 560px;
   background-position: center center;
-}
-.hero-carousel .carousel-inner .item-1 {
-  background-image: url('../images/hero-1.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+.hero-carousel .carousel-inner .item-1 {
+  background-image: url('../images/hero-1.jpg');
 }
 .hero-carousel .carousel-inner .item-2 {
   background-image: url('../images/hero-2.jpg');

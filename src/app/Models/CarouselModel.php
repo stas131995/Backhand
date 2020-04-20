@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class TaskModel
+class CarouselModel
 {
     private $id;
 
@@ -10,9 +10,7 @@ class TaskModel
 
     private $description;
 
-    private $done = 0;
-
-    private $created_date;
+    private $linktext;
 
     public function getId(): int
     {
@@ -44,24 +42,14 @@ class TaskModel
         $this->description = $description;
     }
 
-    public function getDone(): string
+    public function getLinktext(): string
     {
-        return $this->done;
+        return $this->linktext;
     }
 
-    public function setDone(bool $done): void
+    public function setLinktext(string $linktext): void
     {
-        $this->done = intval($done);
+        $this->linktext = $linktext;
     }
 
-    public function getCreatedDate(): string
-    {
-        return $this->created_date;
-    }
-
-    public function setCreatedDate(string $date): void
-    {
-        $this->created_date = date_format(date_create($date), 'Y-m-d');
-    }
-    
 }

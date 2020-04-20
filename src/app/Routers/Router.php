@@ -4,40 +4,32 @@ namespace App\Routers;
 
 class Router
 {
-    protected function resolvePattern(string $pattern)
+    protected $matched = false;
+
+    protected function resolveActionPattern(string $pattern)
     {
         $split = explode("::", $pattern);
+        if (count($split) < 2) {
+            throw new \Exception('Invalid route pattern: ' . $pattern);
+        }
         $className = "\\App\\Controllers\\" . $split[0];
         $methodName = $split[1];
         $instance = new $className();
+        $this->matched = true;
         return $instance->$methodName();
     }
 
-    public function get(string $pattern)
+    protected function uriMatches(string $uriRegExp, string $requestMethod): bool
     {
-        if ($_SERVER['REQUEST_METHOD'] === "GET") {
-            return $this->resolvePattern($pattern);
-        }
+        return $this->matched === false
+            && $_SERVER['REQUEST_METHOD'] === $requestMethod
+            && preg_match($uriRegExp, $_SERVER['REQUEST_URI']);
     }
 
-    public function post(string $pattern)
+    public function get(string $uriPattern, string $actionPattern)
     {
-        if (isset($_POST['method']) && $_POST['method'] === "post") {
-            return $this->resolvePattern($pattern);
-        }
-    }
-
-    public function patch(string $pattern)
-    {
-        if (isset($_POST['method']) && $_POST['method'] === "patch") {
-            return $this->resolvePattern($pattern);
-        }
-    }
-
-    public function delete(string $pattern)
-    {
-        if (isset($_POST['method']) && $_POST['method'] === "delete") {
-            return $this->resolvePattern($pattern);
+        if ($this->uriMatches($uriPattern, 'GET')) {
+            return $this->resolveActionPattern($actionPattern);
         }
     }
 
