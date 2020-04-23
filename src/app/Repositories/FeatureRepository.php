@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\FeaturesModel;
+use App\Entities\FeatureEntity;
 use App\DB\DB;
 
-class FeaturesRepository
+class FeatureRepository
 {
-    private function mapResultToModel(array $result): FeaturesModel
+    private function mapResultToEntity(array $result): FeatureEntity
     {
-        $model = new FeaturesModel();
+        $model = new FeatureEntity();
         $model->setId($result['id']);
         $model->setLinkText($result['linktext']);
         $model->setImagePath($result['imagePath']);
@@ -24,7 +24,7 @@ class FeaturesRepository
        );
        $result = $query->fetch_all(MYSQLI_ASSOC);
        return array_map(function ($row) {
-           return $this->mapResultToModel($row);
+           return $this->mapResultToEntity($row);
        }, $result);
     }
 }

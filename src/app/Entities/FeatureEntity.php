@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
 
-class FeaturesModel
+class FeatureEntity
 {
     private $id;
 

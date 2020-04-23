@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
 
-class PricingModel
+class PricingEntity
 {
     private $id;
 

@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\CarouselModel;
+use App\Entities\CarouselEntity;
 use App\DB\DB;
 
 class CarouselRepository
 {
-    private function mapResultToModel(array $result): CarouselModel
+    private function mapResultToEntity(array $result): CarouselEntity
     {
-        $model = new CarouselModel();
+        $model = new CarouselEntity();
         $model->setId($result['id']);
         $model->setTitle($result['title']);
         $model->setDescription($result['description']);
@@ -25,7 +25,7 @@ class CarouselRepository
        );
        $result = $query->fetch_all(MYSQLI_ASSOC);
        return array_map(function ($row) {
-           return $this->mapResultToModel($row);
+           return $this->mapResultToEntity($row);
        }, $result);
     }
 }

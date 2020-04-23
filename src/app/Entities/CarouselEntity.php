@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
 
-class AboutModel
+class CarouselEntity
 {
     private $id;
 
@@ -10,7 +10,7 @@ class AboutModel
 
     private $description;
 
-    private $imagePath;
+    private $linktext;
 
     public function getId(): int
     {
@@ -42,14 +42,13 @@ class AboutModel
         $this->description = $description;
     }
 
-    public function getImagePath(): string
+    public function getLinktext(): string
     {
-        return $this->imagePath;
+        return $this->linktext;
     }
 
-    public function setImagePath(string $imagePath): void
+    public function setLinktext(string $linktext): void
     {
-        $this->imagePath = $imagePath;
+        $this->linktext = $linktext;
     }
-
 }

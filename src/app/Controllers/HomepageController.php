@@ -4,15 +4,18 @@ namespace App\Controllers;
 
 use App\Repositories\CarouselRepository;
 use Jenssegers\Blade\Blade;
-use App\Models\CarouselModel;
+use App\Entities\CarouselEntity;
 use App\Repositories\AboutRepository;
-use App\Models\AboutModel;
-use App\Repositories\TestimonialsRepository;
-use App\Models\TestimonialsModel;
-use App\Repositories\FeaturesRepository;
-use App\Models\FeaturesModel;
+use App\Entities\AboutEntity;
+use App\Repositories\TestimonialRepository;
+use App\Entities\TestimonialEntity;
+use App\Repositories\FeatureRepository;
+use App\Entities\FeatureEntity;
 use App\Repositories\PricingRepository;
-use App\Models\PricingModel;
+use App\Entities\PricingEntity;
+use App\Repositories\MemberRepository;
+use App\Entities\MemberEntity;
+
 
 
 
@@ -22,16 +25,30 @@ class HomepageController
     {
         $carouselRepository = new CarouselRepository();
         $carouselItems = $carouselRepository->getAll();
+
         $aboutRepository = new AboutRepository();
         $aboutItems = $aboutRepository->getAll();
-        $testimonialsRepository = new TestimonialsRepository();
-        $testimonialsItems =$testimonialsRepository->getAll();
-        $featuresRepository = new FeaturesRepository();
-        $featuresItems =$featuresRepository->getAll();
+
+        $testimonialsRepository = new TestimonialRepository();
+        $testimonialsItems = $testimonialsRepository->getAll();
+
+        $featuresRepository = new FeatureRepository();
+        $featuresItems = $featuresRepository->getAll();
+
         $pricingRepository = new PricingRepository();
-        $pricingItems =$pricingRepository->getAll();
+        $pricingItems = $pricingRepository->getAll();
+
+        $memberRepository = new MemberRepository();
+        $teamMembers = $memberRepository->getAllWithSocials();
         
-        $this->view("home", compact("carouselItems","aboutItems","testimonialsItems","featuresItems","pricingItems"));
+        $this->view("home", compact(
+            "carouselItems",
+            "aboutItems",
+            "testimonialsItems",
+            "featuresItems",
+            "pricingItems",
+            "teamMembers"
+        ));
     }
 
     protected function view(string $viewName, array $params)

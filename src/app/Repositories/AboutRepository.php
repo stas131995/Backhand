@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\AboutModel;
+use App\Entities\AboutEntity;
 use App\DB\DB;
 
 class AboutRepository
 {
-    private function mapResultToModel(array $result): AboutModel
+    private function mapResultToEntity(array $result): AboutEntity
     {
-        $model = new AboutModel();
+        $model = new AboutEntity();
         $model->setId($result['id']);
         $model->setTitle($result['title']);
         $model->setDescription($result['description']);
@@ -25,7 +25,7 @@ class AboutRepository
        );
        $result = $query->fetch_all(MYSQLI_ASSOC);
        return array_map(function ($row) {
-           return $this->mapResultToModel($row);
+           return $this->mapResultToEntity($row);
        }, $result);
     }
 }

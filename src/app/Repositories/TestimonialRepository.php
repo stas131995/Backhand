@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\TestimonialsModel;
+use App\Entities\TestimonialEntity;
 use App\DB\DB;
 
-class TestimonialsRepository
+class TestimonialRepository
 {
-    private function mapResultToModel(array $result): TestimonialsModel
+    private function mapResultToEntity(array $result): TestimonialEntity
     {
-        $model = new TestimonialsModel();
+        $model = new TestimonialEntity();
         $model->setId($result['id']);
         $model->setTitle($result['title']);
         $model->setCustomerName($result['customerName']);
@@ -26,7 +26,7 @@ class TestimonialsRepository
        );
        $result = $query->fetch_all(MYSQLI_ASSOC);
        return array_map(function ($row) {
-           return $this->mapResultToModel($row);
+           return $this->mapResultToEntity($row);
        }, $result);
     }
 }

@@ -9,7 +9,7 @@
     'figureImage' => '/assets/images/imac.png',
 ])
 @endcomponent
-
+  
 @include('components.about')
 
 @include('components.testimonials')
@@ -19,7 +19,12 @@
 ])
 @endcomponent
 
-@include('components.team')
+@if (count($teamMembers))
+    @component('components.team', [
+        'team' => $teamMembers
+    ])
+    @endcomponent
+@endif
 
 @component('components.pricing', [
     'items' => $pricingItems
