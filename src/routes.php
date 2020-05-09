@@ -1,9 +1,8 @@
 <?php
 
-use App\Routers\Router;
-
-$router = new Router();
-
 $router->get('/^$|^\/$/', 'HomepageController::index');
 
-$router->get('/.*/', 'NotFoundPageController::index');
+$router->get('/login/', 'LoginpageController::index');
+$router->post('/login/', 'LoginpageController::login');
+
+//$router->get('/.*/', 'NotFoundPageController::index');

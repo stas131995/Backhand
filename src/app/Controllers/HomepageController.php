@@ -15,31 +15,46 @@ use App\Repositories\PricingRepository;
 use App\Entities\PricingEntity;
 use App\Repositories\MemberRepository;
 use App\Entities\MemberEntity;
+use App\Controllers\Controller;
 
-
-
-
-class HomepageController
+class HomepageController extends Controller
 {
+    protected $carouselRepository;
+
+    protected $aboutRepository;
+
+    protected $testimonialRepository;
+
+    protected $featureRepository;
+    
+    protected $pricingRepository;
+
+    protected $memberRepository;
+
+    public function __construct(
+        CarouselRepository $carouselRepository,
+        AboutRepository $aboutRepository,
+        TestimonialRepository $testimonialRepository,
+        FeatureRepository $featureRepository,
+        PricingRepository $pricingRepository,
+        MemberRepository $memberRepository
+    ) {
+        $this->carouselRepository = $carouselRepository;
+        $this->aboutRepository = $aboutRepository;
+        $this->testimonialRepository = $testimonialRepository;
+        $this->featureRepository = $featureRepository;
+        $this->pricingRepository = $pricingRepository;
+        $this->memberRepository = $memberRepository;
+    }
+
     public function index()
     {
-        $carouselRepository = new CarouselRepository();
-        $carouselItems = $carouselRepository->getAll();
-
-        $aboutRepository = new AboutRepository();
-        $aboutItems = $aboutRepository->getAll();
-
-        $testimonialsRepository = new TestimonialRepository();
-        $testimonialsItems = $testimonialsRepository->getAll();
-
-        $featuresRepository = new FeatureRepository();
-        $featuresItems = $featuresRepository->getAll();
-
-        $pricingRepository = new PricingRepository();
-        $pricingItems = $pricingRepository->getAll();
-
-        $memberRepository = new MemberRepository();
-        $teamMembers = $memberRepository->getAllWithSocials();
+        $carouselItems = $this->carouselRepository->getAll();
+        $aboutItems = $this->aboutRepository->getAll();
+        $testimonialsItems = $this->testimonialRepository->getAll();
+        $featuresItems = $this->featureRepository->getAll();
+        $pricingItems = $this->pricingRepository->getAll();
+        $teamMembers = $this->memberRepository->getAllWithSocials();
         
         $this->view("home", compact(
             "carouselItems",
@@ -49,11 +64,5 @@ class HomepageController
             "pricingItems",
             "teamMembers"
         ));
-    }
-
-    protected function view(string $viewName, array $params)
-    {
-        $blade = new Blade(ROOT_DIR . '/src/views', ROOT_DIR . '/cache/views');
-        echo $blade->render($viewName, $params);
     }
 }

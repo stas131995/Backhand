@@ -2,9 +2,22 @@
 
 namespace App\Routers;
 
+use App\Requests\Request;
+use App\Container\Container;
+
 class Router
 {
     protected $matched = false;
+
+    protected $container;
+
+    protected $request;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+        $this->request = $container->make(Request::class);
+    }
 
     protected function resolveActionPattern(string $pattern)
     {
@@ -14,9 +27,9 @@ class Router
         }
         $className = "\\App\\Controllers\\" . $split[0];
         $methodName = $split[1];
-        $instance = new $className();
+        $instance = $this->container->make($className);
         $this->matched = true;
-        return $instance->$methodName();
+        return $instance->$methodName($this->request);
     }
 
     protected function uriMatches(string $uriRegExp, string $requestMethod): bool
@@ -32,5 +45,13 @@ class Router
             return $this->resolveActionPattern($actionPattern);
         }
     }
+
+    public function post(string $uriPattern, string $actionPattern)
+    {
+        if ($this->uriMatches($uriPattern, 'POST')) {
+            return $this->resolveActionPattern($actionPattern);
+        }
+    }
+
 
 }
